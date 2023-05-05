@@ -18,13 +18,16 @@ void main() {
   late MovieRepositoryImpl repository;
   late MockMovieRemoteDataSource mockRemoteDataSource;
   late MockMovieLocalDataSource mockLocalDataSource;
+  late MockNetworkInfo mockNetworkInfo;
 
   setUp(() {
     mockRemoteDataSource = MockMovieRemoteDataSource();
     mockLocalDataSource = MockMovieLocalDataSource();
+    mockNetworkInfo = MockNetworkInfo();
     repository = MovieRepositoryImpl(
       remoteDataSource: mockRemoteDataSource,
       localDataSource: mockLocalDataSource,
+      networkInfo: mockNetworkInfo,
     );
   });
 
@@ -66,8 +69,18 @@ void main() {
   final tMovieList = <Movie>[tMovie];
 
   group('Now Playing Movies', () {
+    setUp(() {
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+    });
     test('should check if the device is online', () async {
-
+      //arrage
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      when(mockRemoteDataSource.getNowPlayingMovies())
+          .thenAnswer((realInvocation) async => []);
+      //act
+      await repository.getNowPlayingMovies();
+      //assert
+      verify(mockNetworkInfo.isConnected);
     });
     test(
         'should return remote data when the call to remote data source is successful',

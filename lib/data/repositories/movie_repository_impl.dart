@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:ditonton/common/network_info.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/models/movie_table.dart';
@@ -13,14 +14,17 @@ import 'package:ditonton/common/failure.dart';
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteDataSource remoteDataSource;
   final MovieLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
 
   MovieRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
+    required this.networkInfo,
   });
 
   @override
   Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {
+    networkInfo.isConnected;
     try {
       final result = await remoteDataSource.getNowPlayingMovies();
       return Right(result.map((model) => model.toEntity()).toList());
