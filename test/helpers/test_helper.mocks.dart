@@ -329,6 +329,26 @@ class MockMovieLocalDataSource extends _i1.Mock
   }
 
   @override
+  _i6.Future<void> cacheNowPlayingMovies(List<dynamic>? movies) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #cacheNowPlayingMovies,
+          [movies],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<List<_i13.MovieTable>> getCachedNowPlayingMovies() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCachedNowPlayingMovies,
+          [],
+        ),
+        returnValue:
+            _i6.Future<List<_i13.MovieTable>>.value(<_i13.MovieTable>[]),
+      ) as _i6.Future<List<_i13.MovieTable>>);
+  @override
   _i6.Future<String> insertWatchlist(_i13.MovieTable? movie) =>
       (super.noSuchMethod(
         Invocation.method(
