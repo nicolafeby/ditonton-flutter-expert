@@ -15,17 +15,23 @@ class WatchlistMoviesPage extends StatefulWidget {
 class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
     with RouteAware {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     Future.microtask(() =>
         Provider.of<WatchlistMovieNotifier>(context, listen: false)
             .fetchWatchlistMovies());
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   void didPopNext() {
@@ -65,11 +71,5 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
   }
 }

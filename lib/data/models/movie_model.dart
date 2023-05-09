@@ -18,20 +18,6 @@ class MovieModel extends Equatable {
     required this.voteCount,
   });
 
-  final bool adult;
-  final String? backdropPath;
-  final List<int> genreIds;
-  final int id;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String? posterPath;
-  final String? releaseDate;
-  final String title;
-  final bool video;
-  final double voteAverage;
-  final int voteCount;
-
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
@@ -47,6 +33,37 @@ class MovieModel extends Equatable {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
+
+  final bool adult;
+  final String? backdropPath;
+  final List<int> genreIds;
+  final int id;
+  final String originalTitle;
+  final String overview;
+  final double popularity;
+  final String? posterPath;
+  final String? releaseDate;
+  final String title;
+  final bool video;
+  final double voteAverage;
+  final int voteCount;
+
+  @override
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        genreIds,
+        id,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage,
+        voteCount,
+      ];
 
   Map<String, dynamic> toJson() => {
         "adult": adult,
@@ -81,21 +98,4 @@ class MovieModel extends Equatable {
       voteCount: this.voteCount,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        adult,
-        backdropPath,
-        genreIds,
-        id,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount,
-      ];
 }

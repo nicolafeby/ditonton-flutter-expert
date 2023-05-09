@@ -4,17 +4,19 @@ import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:equatable/equatable.dart';
 
 class MovieTable extends Equatable {
-  final int id;
-  final String? title;
-  final String? posterPath;
-  final String? overview;
-
   MovieTable({
     required this.id,
     required this.title,
     required this.posterPath,
     required this.overview,
   });
+
+  factory MovieTable.fromDTO(MovieModel movie) => MovieTable(
+        id: movie.id,
+        title: movie.title,
+        posterPath: movie.posterPath,
+        overview: movie.overview,
+      );
 
   factory MovieTable.fromEntity(MovieDetail movie) => MovieTable(
         id: movie.id,
@@ -30,12 +32,13 @@ class MovieTable extends Equatable {
         overview: map['overview'],
       );
 
-  factory MovieTable.fromDTO(MovieModel movie) => MovieTable(
-        id: movie.id,
-        title: movie.title,
-        posterPath: movie.posterPath,
-        overview: movie.overview,
-      );
+  final int id;
+  final String? overview;
+  final String? posterPath;
+  final String? title;
+
+  @override
+  List<Object?> get props => [id, title, posterPath, overview];
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -50,7 +53,4 @@ class MovieTable extends Equatable {
         posterPath: posterPath,
         title: title,
       );
-
-  @override
-  List<Object?> get props => [id, title, posterPath, overview];
 }

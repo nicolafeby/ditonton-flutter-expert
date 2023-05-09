@@ -10,15 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MovieDetailNotifier extends ChangeNotifier {
-  static const watchlistAddSuccessMessage = 'Added to Watchlist';
-  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
-
-  final GetMovieDetail getMovieDetail;
-  final GetMovieRecommendations getMovieRecommendations;
-  final GetWatchListStatus getWatchListStatus;
-  final SaveWatchlist saveWatchlist;
-  final RemoveWatchlist removeWatchlist;
-
   MovieDetailNotifier({
     required this.getMovieDetail,
     required this.getMovieRecommendations,
@@ -27,22 +18,33 @@ class MovieDetailNotifier extends ChangeNotifier {
     required this.removeWatchlist,
   });
 
-  late MovieDetail _movie;
-  MovieDetail get movie => _movie;
+  static const watchlistAddSuccessMessage = 'Added to Watchlist';
+  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
 
-  RequestState _movieState = RequestState.Empty;
-  RequestState get movieState => _movieState;
-
-  List<Movie> _movieRecommendations = [];
-  List<Movie> get movieRecommendations => _movieRecommendations;
-
-  RequestState _recommendationState = RequestState.Empty;
-  RequestState get recommendationState => _recommendationState;
-
-  String _message = '';
-  String get message => _message;
+  final GetMovieDetail getMovieDetail;
+  final GetMovieRecommendations getMovieRecommendations;
+  final GetWatchListStatus getWatchListStatus;
+  final RemoveWatchlist removeWatchlist;
+  final SaveWatchlist saveWatchlist;
 
   bool _isAddedtoWatchlist = false;
+  String _message = '';
+  late MovieDetail _movie;
+  List<Movie> _movieRecommendations = [];
+  RequestState _movieState = RequestState.Empty;
+  RequestState _recommendationState = RequestState.Empty;
+  String _watchlistMessage = '';
+
+  MovieDetail get movie => _movie;
+
+  RequestState get movieState => _movieState;
+
+  List<Movie> get movieRecommendations => _movieRecommendations;
+
+  RequestState get recommendationState => _recommendationState;
+
+  String get message => _message;
+
   bool get isAddedToWatchlist => _isAddedtoWatchlist;
 
   Future<void> fetchMovieDetail(int id) async {
@@ -76,7 +78,6 @@ class MovieDetailNotifier extends ChangeNotifier {
     );
   }
 
-  String _watchlistMessage = '';
   String get watchlistMessage => _watchlistMessage;
 
   Future<void> addWatchlist(MovieDetail movie) async {

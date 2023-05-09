@@ -7,13 +7,16 @@ class GenreModel extends Equatable {
     required this.name,
   });
 
-  final int id;
-  final String name;
-
   factory GenreModel.fromJson(Map<String, dynamic> json) => GenreModel(
         id: json["id"],
         name: json["name"],
       );
+
+  final int id;
+  final String name;
+
+  @override
+  List<Object?> get props => [id, name];
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -23,7 +26,4 @@ class GenreModel extends Equatable {
   Genre toEntity() {
     return Genre(id: this.id, name: this.name);
   }
-
-  @override
-  List<Object?> get props => [id, name];
 }

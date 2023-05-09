@@ -10,10 +10,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
+  MovieDetailPage({required this.id});
+
   static const ROUTE_NAME = '/detail';
 
   final int id;
-  MovieDetailPage({required this.id});
 
   @override
   _MovieDetailPageState createState() => _MovieDetailPageState();
@@ -59,11 +60,35 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 }
 
 class DetailContent extends StatelessWidget {
+  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+
+  final bool isAddedWatchlist;
   final MovieDetail movie;
   final List<Movie> recommendations;
-  final bool isAddedWatchlist;
 
-  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+  String _showGenres(List<Genre> genres) {
+    String result = '';
+    for (var genre in genres) {
+      result += genre.name + ', ';
+    }
+
+    if (result.isEmpty) {
+      return result;
+    }
+
+    return result.substring(0, result.length - 2);
+  }
+
+  String _showDuration(int runtime) {
+    final int hours = runtime ~/ 60;
+    final int minutes = runtime % 60;
+
+    if (hours > 0) {
+      return '${hours}h ${minutes}m';
+    } else {
+      return '${minutes}m';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -277,29 +302,5 @@ class DetailContent extends StatelessWidget {
         )
       ],
     );
-  }
-
-  String _showGenres(List<Genre> genres) {
-    String result = '';
-    for (var genre in genres) {
-      result += genre.name + ', ';
-    }
-
-    if (result.isEmpty) {
-      return result;
-    }
-
-    return result.substring(0, result.length - 2);
-  }
-
-  String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
-
-    if (hours > 0) {
-      return '${hours}h ${minutes}m';
-    } else {
-      return '${minutes}m';
-    }
   }
 }

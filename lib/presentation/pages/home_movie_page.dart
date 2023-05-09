@@ -25,6 +25,27 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
           ..fetchTopRatedMovies());
   }
 
+  Row _buildSubHeading({required String title, required Function() onTap}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: kHeading6,
+        ),
+        InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,33 +111,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
       ),
     );
   }
-
-  Row _buildSubHeading({required String title, required Function() onTap}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: kHeading6,
-        ),
-        InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class MovieList extends StatelessWidget {
-  final List<Movie> movies;
-
   MovieList(this.movies);
+
+  final List<Movie> movies;
 
   @override
   Widget build(BuildContext context) {

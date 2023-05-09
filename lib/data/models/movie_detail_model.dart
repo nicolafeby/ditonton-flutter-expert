@@ -27,28 +27,6 @@ class MovieDetailResponse extends Equatable {
     required this.voteCount,
   });
 
-  final bool adult;
-  final String? backdropPath;
-  final int budget;
-  final List<GenreModel> genres;
-  final String homepage;
-  final int id;
-  final String? imdbId;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String posterPath;
-  final String releaseDate;
-  final int revenue;
-  final int runtime;
-  final String status;
-  final String tagline;
-  final String title;
-  final bool video;
-  final double voteAverage;
-  final int voteCount;
-
   factory MovieDetailResponse.fromJson(Map<String, dynamic> json) =>
       MovieDetailResponse(
         adult: json["adult"],
@@ -74,6 +52,54 @@ class MovieDetailResponse extends Equatable {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
+
+  final bool adult;
+  final String? backdropPath;
+  final int budget;
+  final List<GenreModel> genres;
+  final String homepage;
+  final int id;
+  final String? imdbId;
+  final String originalLanguage;
+  final String originalTitle;
+  final String overview;
+  final double popularity;
+  final String posterPath;
+  final String releaseDate;
+  final int revenue;
+  final int runtime;
+  final String status;
+  final String tagline;
+  final String title;
+  final bool video;
+  final double voteAverage;
+  final int voteCount;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        budget,
+        genres,
+        homepage,
+        id,
+        imdbId,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        revenue,
+        runtime,
+        status,
+        tagline,
+        title,
+        video,
+        voteAverage,
+        voteCount,
+      ];
 
   Map<String, dynamic> toJson() => {
         "adult": adult,
@@ -115,30 +141,4 @@ class MovieDetailResponse extends Equatable {
       voteCount: this.voteCount,
     );
   }
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [
-        adult,
-        backdropPath,
-        budget,
-        genres,
-        homepage,
-        id,
-        imdbId,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        revenue,
-        runtime,
-        status,
-        tagline,
-        title,
-        video,
-        voteAverage,
-        voteCount,
-      ];
 }

@@ -2,8 +2,9 @@ import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatefulWidget {
-  final Widget content;
   const CustomDrawer({required this.content, Key? key}) : super(key: key);
+
+  final Widget content;
 
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
@@ -12,6 +13,19 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+  }
+
+  void toggle() => _animationController.isDismissed
+      ? _animationController.forward()
+      : _animationController.reverse();
 
   Widget _buildDrawer() {
     return Container(
@@ -35,19 +49,6 @@ class _CustomDrawerState extends State<CustomDrawer>
           ),
         ],
       ),
-    );
-  }
-
-  void toggle() => _animationController.isDismissed
-      ? _animationController.forward()
-      : _animationController.reverse();
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 250),
     );
   }
 

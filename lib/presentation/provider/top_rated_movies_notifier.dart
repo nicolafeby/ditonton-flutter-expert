@@ -4,17 +4,18 @@ import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
 import 'package:flutter/foundation.dart';
 
 class TopRatedMoviesNotifier extends ChangeNotifier {
-  final GetTopRatedMovies getTopRatedMovies;
-
   TopRatedMoviesNotifier({required this.getTopRatedMovies});
 
-  RequestState _state = RequestState.Empty;
-  RequestState get state => _state;
-
-  List<Movie> _movies = [];
-  List<Movie> get movies => _movies;
+  final GetTopRatedMovies getTopRatedMovies;
 
   String _message = '';
+  List<Movie> _movies = [];
+  RequestState _state = RequestState.Empty;
+
+  RequestState get state => _state;
+
+  List<Movie> get movies => _movies;
+
   String get message => _message;
 
   Future<void> fetchTopRatedMovies() async {

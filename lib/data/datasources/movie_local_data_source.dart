@@ -4,35 +4,36 @@ import 'package:ditonton/data/models/movie_table.dart';
 
 abstract class MovieLocalDataSource {
   Future<String> insertWatchlist(MovieTable movie);
+
   Future<String> removeWatchlist(MovieTable movie);
+
   Future<MovieTable?> getMovieById(int id);
+
   Future<List<MovieTable>> getWatchlistMovies();
+
   Future<void> cacheNowPlayingMovies(List<MovieTable> movies);
+
   Future<List<MovieTable>> getCachedNowPlayingMovies();
 }
 
 class MovieLocalDataSourceImpl implements MovieLocalDataSource {
-  final DatabaseHelper databaseHelper;
-
   MovieLocalDataSourceImpl({required this.databaseHelper});
 
+  final DatabaseHelper databaseHelper;
+
   @override
-  Future<String> insertWatchlist(MovieTable movie) async {
-    try {
-      await databaseHelper.insertWatchlist(movie);
-      return 'Added to Watchlist';
-    } catch (e) {
-      throw DatabaseException(e.toString());
-    }
+  Future<void> cacheNowPlayingMovies(List<MovieTable> movies) async {
+    await databaseHelper.clearCache('now playing');
+    await databaseHelper.insertCacheTransaction(movies, 'now playing');
   }
 
   @override
-  Future<String> removeWatchlist(MovieTable movie) async {
-    try {
-      await databaseHelper.removeWatchlist(movie);
-      return 'Removed from Watchlist';
-    } catch (e) {
-      throw DatabaseException(e.toString());
+  Future<List<MovieTable>> getCachedNowPlayingMovies() async {
+    final result = await databaseHelper.getCacheMovies('now playing');
+    if (result.length > 0) {
+      return result.map((data) => MovieTable.fromMap(data)).toList();
+    } else {
+      throw CacheException("Can't get the data :(");
     }
   }
 
@@ -53,18 +54,22 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   }
 
   @override
-  Future<void> cacheNowPlayingMovies(List<MovieTable> movies) async {
-    await databaseHelper.clearCache('now playing');
-    await databaseHelper.insertCacheTransaction(movies, 'now playing');
+  Future<String> insertWatchlist(MovieTable movie) async {
+    try {
+      await databaseHelper.insertWatchlist(movie);
+      return 'Added to Watchlist';
+    } catch (e) {
+      throw DatabaseException(e.toString());
+    }
   }
 
   @override
-  Future<List<MovieTable>> getCachedNowPlayingMovies() async {
-    final result = await databaseHelper.getCacheMovies('now playing');
-    if (result.length > 0) {
-      return result.map((data) => MovieTable.fromMap(data)).toList();
-    } else {
-      throw CacheException("Can't get the data :(");
+  Future<String> removeWatchlist(MovieTable movie) async {
+    try {
+      await databaseHelper.removeWatchlist(movie);
+      return 'Removed from Watchlist';
+    } catch (e) {
+      throw DatabaseException(e.toString());
     }
   }
 }
